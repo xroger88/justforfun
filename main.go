@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
-	"io"
-	"log"
 	"net/http"
 )
 
+/***
 // this is the first go program written with VI by myself!!!
 func main() {
 	http.HandleFunc("/", printHello)
@@ -17,7 +16,20 @@ func main() {
 
 	fmt.Println("....")
 }
+***/
+
+// for gcloud app engine
+func init() {
+	http.HandleFunc("/", printHello)
+}
+
+const content = `<?xml version="1.0" encoding="UTF-8" ?>
+<Response>
+	<Say>Hello Monkey!!</Say>
+</Response>`
 
 func printHello(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Hello Go!\n")
+	w.Header().Set("Content-Type", "text/xml")
+	fmt.Fprint(w, content)
+	//io.WriteString(w, "Hello Go!\n")
 }
