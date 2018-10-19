@@ -40,6 +40,10 @@ func main() {
 	}
 
 	gateway := NewGateway(settings)
+
+	fs := http.FileServer(http.Dir("web/"))
+	http.Handle("/web/", http.StripPrefix("/web/", fs))
+
 	http.HandleFunc("/", printHello)
 	http.HandleFunc("/nats", gateway.Handler)
 
