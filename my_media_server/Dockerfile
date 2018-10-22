@@ -14,16 +14,19 @@ COPY ./app /app
 
 
 EXPOSE 9091
+
+# simple http server serving resources (/web) as file server, secure nats-websocket-gw2 (/nats)
+EXPOSE 8910
+
 # openvidu server port
 EXPOSE 4443
 # non-secure KMS port
 EXPOSE 8888
 # secure KMS port
-EXPOSE 8443 
-# simple http server serving resources (/web) as file server, secure nats-websocket-gw2 (/nats)
-EXPOSE 8910
+EXPOSE 8433 
 # nats server port
 EXPOSE 4222
+
 
 # Exec supervisord
 CMD ["/usr/bin/supervisord"]
