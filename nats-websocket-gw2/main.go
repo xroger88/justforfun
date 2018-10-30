@@ -16,7 +16,7 @@ func usage() {
 
 func main() {
 	settings := Settings{
-		NatsAddr: "localhost:4222",
+		NatsAddr: "127.0.0.1:4222",
 	}
 
 	for _, arg := range os.Args[1:] {
