@@ -1,0 +1,5 @@
+/etc/kurento/modules/kurento/WebRtcEndpoint.conf.ini
+/etc/turnserver.conf
+/etc/default/coturn
+COPY kurento.conf.json /etc/kurento/kurento.conf.json
+COPY defaultCertificate.pem /etc/kurento/defaultCertificate.pem
