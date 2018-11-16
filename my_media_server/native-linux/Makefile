@@ -21,3 +21,6 @@ test:
 start-peerjs-server:
 	~/justforfun/peerjs-server/node_modules/peer/bin/peerjs --port 9000 --sslkey ./xroger88.key --sslcert ./xroger88.crt
 
+start-peerjs-server2:
+	~/justforfun/peerjs-server/node_modules/peer/bin/peerjs --port 9000 
+
