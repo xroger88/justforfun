@@ -1,0 +1,5 @@
+to make it work
+- npm init
+- npm install peer  # for broker server
+# you can see ./node_modules/peer/bin/peerjs
+- npm install peerjs # for client peer

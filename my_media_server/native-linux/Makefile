@@ -17,3 +17,7 @@ stop:
 test:
 	PID=`ps ax | grep nats-websocket-gw2 | line | awk '{ print $1 }'`
 	echo $PID
+
+start-peerjs-server:
+	~/justforfun/peerjs-server/node_modules/peer/bin/peerjs --port 9000 --sslkey ./xroger88.key --sslcert ./xroger88.crt
+
