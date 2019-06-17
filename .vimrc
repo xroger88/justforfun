@@ -1,4 +1,4 @@
-" A sensible vimrc for Go development
+" A sensible vimrc for xroger88 development
 "
 " Please note that the following settings are some default that I used
 " for years. However it might be not the case for you (and your
@@ -6,28 +6,31 @@
 " needs. Think of a vimrc as a garden that needs to be maintained and fostered
 " throughout years. Keep it clean and useful - Fatih Arslan
 
-call plug#begin('~/.vim/plugged')
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'}
-Plug 'fatih/molokai'
-: Plug 'honza/vim-snippets'
-" Plug 'neomake/neomake'
-call plug#end()
-
-execute pathogen#infect()
-execute pathogen#helptags()
-syntax on
 
 """"""""""""""""""""""
 "      Settings      "
 """"""""""""""""""""""
+syntax on
 set nocompatible                " Enables us Vim specific features
 filetype off                    " Reset filetype detection first ...
 filetype plugin indent on       " ... and enable filetype detection
 set ttyfast                     " Indicate fast terminal conn for faster redraw
+
+set tabstop=2
+set shiftwidth=2
+
+" Colorscheme
+set t_Co=256
+let g:rehash256 = 1
+let g:molokai_original = 1
+" colorscheme molokai
+" colorscheme solarized8_light_flat
+
 if !has('nvim')
 	set ttymouse=xterm2             " Indicate terminal type for mouse codes
 	set ttyscroll=3                 " Speedup scrolling
 endif
+
 set laststatus=2                " Show status line always
 set encoding=utf-8              " Set default encoding to UTF-8
 set autoread                    " Automatically read changed files
@@ -56,6 +59,7 @@ set pumheight=10                " Completion window max size
 set nocursorcolumn              " Do not highlight column (speeds up highlighting)
 set nocursorline                " Do not highlight cursor (speeds up highlighting)
 set lazyredraw                  " Wait to redraw
+
 " ctags
 set tags=./tags,tags,~/commontags
 " fzf --- fuzzy finder
@@ -106,171 +110,6 @@ nnoremap Y y$
 " Enter automatically into the files directory
 autocmd BufEnter * silent! lcd %:p:h
 
-
-"""""""""""""""""""""
-"      Plugins      "
-"""""""""""""""""""""
-
-" vim-go
-let g:go_fmt_command = "goimports"
-let g:go_autodetect_gopath = 1
-let g:go_list_type = "quickfix"
-
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_generate_tags = 1
-
-" Open :GoDeclsDir with ctrl-g
-nmap <C-g> :GoDeclsDir<cr>
-imap <C-g> <esc>:<C-u>GoDeclsDir<cr>
-
-" Default setting
-set noexpandtab
-set tabstop=2
-set shiftwidth=2
-
-augroup go
-  autocmd!
-
-  " Show by default 4 spaces for a tab
-  autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
-
-  " :GoBuild and :GoTestCompile
-  autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-
-  " :GoTest
-  autocmd FileType go nmap <leader>t  <Plug>(go-test)
-
-  " :GoRun
-  autocmd FileType go nmap <leader>r  <Plug>(go-run)
-
-  " :GoDoc
-  autocmd FileType go nmap <Leader>d <Plug>(go-doc)
-
-  " :GoCoverageToggle
-  autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
-
-  " :GoInfo
-  autocmd FileType go nmap <Leader>i <Plug>(go-info)
-
-  " :GoMetaLinter
-  autocmd FileType go nmap <Leader>l <Plug>(go-metalinter)
-
-  " :GoDef but opens in a vertical split
-  autocmd FileType go nmap <Leader>v <Plug>(go-def-vertical)
-  " :GoDef but opens in a horizontal split
-  autocmd FileType go nmap <Leader>s <Plug>(go-def-split)
-
-  " :GoAlternate  commands :A, :AV, :AS and :AT
-  autocmd Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
-  autocmd Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
-  autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
-  autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
-augroup END
-
-" build_go_files is a custom function that builds or compiles the test file.
-" It calls :GoBuild if its a Go file, or :GoTestCompile if it's a test file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#test#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
-
-" .vimrc auto update
-" if has("autocmd")
-"   autocmd bufwritepost .vimrc source $MYVIMRC
-" endif
-
-" For on-demend minpac packages
-if &compatible
-	" `:set nocp` has many side effects. Therefore this should be done
-	" only when 'compatible' is set.
-	set nocompatible
-endif
-
-if 1 " exists('*minpac#init')
-	packadd minpac
-	call minpac#init()
-	" for easy editing
-	call minpac#add('tpope/vim-surround')
-	call minpac#add('tpope/vim-unimpaired')
-	call minpac#add('tommcdo/vim-exchange')
-	call minpac#add('AndrewRadev/splitjoin.vim')
-	" for IDE plugins
-	call minpac#add('scrooloose/nerdtree')
-	call minpac#add('ctrlpvim/ctrlp.vim') 
-	call minpac#add('wesleyche/SrcExpl')
-	call minpac#add('SirVer/ultisnips')
-	let g:UltiSnipsUsePythonVersion = 3
-	call minpac#add('tpope/vim-scriptease', {'type':'opt'})
-	call minpac#add('scrooloose/syntastic')
-	call minpac#add('vim-airline/vim-airline')
-	call minpac#add('airblade/vim-gitgutter')
-	call minpac#add('tpope/vim-fugitive')
-
-	" for interacting with tmux in vim
-	call minpac#add('benmills/vimux')
-
-	" --- for auto-completion
-	call minpac#add('Shougo/deoplete.nvim')
-	call minpac#add('zchee/deoplete-go', { 'do': 'make'})	
-
-	if !has('nvim')
-		call minpac#add('roxma/nvim-yarp')
-		call minpac#add('roxma/vim-hug-neovim-rpc')
-	endif
-
-	" neocomplete like
-	set completeopt+=noinsert
-	" deoplete.nvim recommend
-	set completeopt+=noselect
-
-	" Path to python interpreter for neovim
-	let g:python3_host_prog  = '/usr/bin/python3'
-	" Skip the check of neovim module
-	let g:python3_host_skip_check = 1
-
-	" Run deoplete.nvim automatically
-	let g:deoplete#enable_at_startup = 1
-	" deoplete-go settings
-	let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-	let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-
-
-	" hot key for source exploration
-	nmap <F7> :TlistToggle<CR>
-	let Tlist_Use_Right_Window = 1
-	let Tlist_GainFocus_On_ToggleOpen = 1
-	nmap <F8> :SrcExplToggle<CR>
-	nmap <F9> :NERDTreeToggle<CR>
-	let NERDTreeWinPos = "left"
-
-	" for coloring
-	call minpac#add('lifepillar/vim-solarized8', {'type':'opt'})
-	call minpac#add('nanotech/jellybeans.vim', {'type':'opt'})
-
-	" for minpac itself update
-	call minpac#add('t-takata/minpac', {'type':'opt'})
-endif
-
-" minpac commands:
-command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update()
-command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
-
-" Colorscheme
-syntax enable
-set t_Co=256
-let g:rehash256 = 1
-let g:molokai_original = 1
-" colorscheme molokai
-colorscheme solarized8_light_flat
-
 " key mapping in terminal mode (nvim)
 if has('nvim')
   " Terminal mode:
@@ -295,3 +134,43 @@ if has('nvim')
   nnoremap <C-l> <c-w>l
   nnoremap <silent> vv <c-w>s
 endif
+
+" hot key for source exploration
+nmap <F7> :TlistToggle<CR>
+let Tlist_Use_Right_Window = 1
+let Tlist_GainFocus_On_ToggleOpen = 1
+nmap <F8> :SrcExplToggle<CR>
+nmap <F9> :NERDTreeToggle<CR>
+let NERDTreeWinPos = "left"
+
+"""""""""""""""""""""
+"      Plugins      "
+"""""""""""""""""""""
+
+call plug#begin('~/.vim/plugged')
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+" Any valid git URL is allowed
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+" Multiple Plug commands can be written in a single line using | separators
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" " Using a non-master branch
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+" " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+" Plug 'fatih/vim-go', { 'tag': '*' }
+" " Plugin options
+" Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+" " Plugin outside ~/.vim/plugged with post-update hook
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"   " Unmanaged plugin (manually installed and updated)
+"   Plug '~/my-prototype-plugin'
+
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'}
+Plug 'fatih/molokai'
+" Plug 'neomake/neomake'
+call plug#end()
+
