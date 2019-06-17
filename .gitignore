@@ -1,3 +1,4 @@
 *.log
 *~
+.vim/plugged/
 peerjs-server/node_modules/

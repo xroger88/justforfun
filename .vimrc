@@ -152,11 +152,43 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-easy-align'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-" Multiple Plug commands can be written in a single line using | separators
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" for easy editing
+Plug 'tpope/vim-surround' | Plug 'tpope/vim-unimpaired' | Plug 'tommcdo/vim-exchange' | Plug 'AndrewRadev/splitjoin.vim'
+
+" for IDE plugins
+if has('nvim')
+  Plug 'SirVer/ultisnips' | Plug 'ctrlpvim/ctrlp.vim' | Plug 'honza/vim-snippets'
+  let g:UltiSnipsUsePythonVersion = 3
+  " Path to python interpreter for neovim
+  let g:python3_host_prog  = '/usr/bin/python3'
+  " Skip the check of neovim module
+  let g:python3_host_skip_check = 1
+  Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+  Plug 'wesleyche/SrcExpl', { 'on': 'SrcExplToggle' } 
+  Plug 'tpope/vim-scriptease', { 'type': 'opt' }
+  Plug 'scrooloose/syntastic'
+  Plug 'vim-airline/vim-airline'
+  Plug 'airblade/vim-gitgutter'
+
+  " --- for auto-completion
+  " Plug 'Shougo/deoplete.nvim'| Plug 'zchee/deoplete-go', { 'do': 'make'}	
+  " " Run deoplete.nvim automatically
+  " let g:deoplete#enable_at_startup = 1
+  " " deoplete-go settings
+  " let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+  " let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+endif
+
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+	
+" for interacting with tmux in vim
+Plug 'benmills/vimux'
+
+" Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'}
+" Plug 'fatih/molokai'
+" Plug 'neomake/neomake'
 
 " " Using a non-master branch
 " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
@@ -169,8 +201,5 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 "   " Unmanaged plugin (manually installed and updated)
 "   Plug '~/my-prototype-plugin'
 
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'}
-Plug 'fatih/molokai'
-" Plug 'neomake/neomake'
 call plug#end()
 

@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/Users/xroger88/dev/clojure/test-check-sample'
 let g:netrw_dirhist_2='/Users/xroger88/dev/clojure/test-check-sample/test'
 let g:netrw_dirhist_3='/Users/xroger88/dev/clojure/test-check-sample/test/test_check_sample'
+let g:netrw_dirhist_4='/Users/xroger88/dev/justforfun/.git'
