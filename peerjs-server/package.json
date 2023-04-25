@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "peer": "^0.2.10",
+    "peer": "^1.0.0",
     "peerjs": "^0.3.18"
   }
 }
