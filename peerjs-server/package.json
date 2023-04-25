@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "peer": "^0.2.10",
-    "peerjs": "^0.3.18"
+    "peerjs": "^1.4.7"
   }
 }
